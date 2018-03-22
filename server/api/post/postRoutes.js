@@ -1,8 +1,6 @@
 const router = require('express').Router();
-
-router.route('/').get((req, res) => {
-    console.log('Hey from post!!');
-    res.send({ok: true});
-});
+var controller = require('./postController');
+var createRoutes = require('../../util/createRoutes');
+createRoutes(controller, router);
 
 module.exports = router;

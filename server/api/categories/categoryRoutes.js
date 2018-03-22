@@ -1,8 +1,5 @@
 const router = require('express').Router();
-
-router.route('/').get((req, res) => {
-  console.log('Hey from categories!!');
-  res.send({ok: true});
-});
-
+var createRoutes = require('../../util/createRoutes');
+var controller = require('./categoryController');
+createRoutes(controller, router);
 module.exports = router;

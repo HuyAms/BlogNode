@@ -3,7 +3,7 @@ const _ = require('lodash');
 const error = require('../../util/apiError');
 const responseHandler = require('../../util/responseHandler');
 
-exports.param = (req, res, next, id) => {
+exports.params = (req, res, next, id) => {
   Post.findById(id).populate('author categories').exec().then((post) => {
     if (!post) {
       next(error.notFoundPostError);

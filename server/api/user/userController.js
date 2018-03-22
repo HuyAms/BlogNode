@@ -4,6 +4,7 @@ const error = require('../../util/apiError');
 const responseHandler = require('../../util/responseHandler');
 
 exports.params = (req, res, next, id) => {
+  console.log(id);
   User.findById(id).then((user) => {
     if (!user) {
       next(error.notFoundUserError);
@@ -47,7 +48,6 @@ exports.put = (req, res, next) => {
 
 exports.post = (req, res, next) => {
   const newUser = req.body;
-
   User.create(newUser).then((user) => {
     res.json(responseHandler.successResponse(user));
   }, (err) => {
