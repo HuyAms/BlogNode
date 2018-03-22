@@ -12,7 +12,7 @@ exports.params = (req, res, next, id) => {
       next();
     }
   }, (err) => {
-    next(error.internalServerError);
+    next(error.notFoundPostError);
   });
 };
 
