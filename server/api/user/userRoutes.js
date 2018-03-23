@@ -1,12 +1,18 @@
 const router = require('express').Router();
+const auth = require('../../auth/auth')
+const checkUser = [auth.decodeToken(), auth.getFreshUser()];
 
-var controller = require('./userController');
-var createRoutes = require('../../util/createRoutes');
-createRoutes(controller, router);
+router.param('id', controller.params);
+router.get('/me', checkUser, controller.me);
 
-// router.post('/', (req, res, next) => {
-//   console.log(req.body);
-//   res.send('Hello');
-// });
+router.route('/')
+.get(controller.get)
+.post(controller.post)
+
+router.route('/:id')
+.get(controller.getOne)
+.put(checkUser, controller.put)
+.delete(checkUser, controller.delete)
+
 
 module.exports = router;

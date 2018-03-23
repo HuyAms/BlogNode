@@ -5,6 +5,10 @@ const config = {
   test: 'testing',
   prod: 'production',
   port: process.env.PORT || 3000,
+  expireTime: 24 * 60 *10, //10 days
+  secrets: {
+    jwt: process.env.JWT || 'awesomeTeam'
+  }
 };
 
 process.env.NODE_ENV = process.env.NODE_ENV || config.dev;

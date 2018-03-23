@@ -2,8 +2,10 @@ const Category = require('./categoryModel');
 const _ = require('lodash');
 const error = require('../../util/apiError');
 const responseHandler = require('../../util/responseHandler');
+const validator = require('../../middleware/validation');
 
 exports.params = (req, res, next, id) => {
+
   Category.findById(id).then((category) => {
     if (!category) {
       next(error.notFoundCategoryError);
