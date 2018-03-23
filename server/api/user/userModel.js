@@ -33,7 +33,7 @@ UserSchema.methods = {
   },
 
   //hashpassword
-  encryptPassword: (plainTextPword) => {
+  encryptPassword: function(plainTextPword) {
     if (!plainTextPword) {
       return '';
     } else {
@@ -43,8 +43,8 @@ UserSchema.methods = {
   },
 
   //delete password
-  toJson: () => {
-    const obj = this.toObject();
+  toJson: function() {
+    const obj = this.toObject()
     delete obj.password;
     return obj;
   }

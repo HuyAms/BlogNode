@@ -4,6 +4,8 @@ const config = require('../config/config');
 const checkToken = expressJwt({secret: config.secrets.jwt});
 const User = require('../api/user/userModel');
 const error = require('../util/apiError');
+const httpStatus = require('http-status');
+
 
 exports.decodeToken = () => {
   return (req, res, next) => {
@@ -28,14 +30,14 @@ exports.getFreshUser = () => {
     User.findById(req.user._id).then((user) => {
       //Cannot find user with that id
       if (!user) {
-        res.status(401).json(error.unauthorizedError);
+        next(error.badRequestError('Cannot find user with that id'))
       } else {
         //update req.user with fresh user from database
         req.user = user;
         next();
       }
     }, (err) => {
-      next(err);
+      next(error.badRequestError('Cannot find user with that id'))
     });
   };
 };
@@ -47,7 +49,7 @@ exports.verifyUser = () => {
 
     //if no username or password then send
     if (!username || !password) {
-      res.status(400).json(error.badRequestError);
+      next(error.badRequestError());
       return;
     }
 
@@ -55,10 +57,10 @@ exports.verifyUser = () => {
     //for the username
     User.findOne({username: username}).then((user) => {
       if (!user) {
-        res.status(401).json(error.badRequestError);
+        next(error.badRequestError('Username has not existed'))
       } else {
         if (!user.authenticate(password)) {
-          res.status(401).json(error.unauthorizedError);
+          next(error.unauthorizedError('Password is not existed'))
         } else {
           //if everything is ok
           //attach to req.user
@@ -69,7 +71,7 @@ exports.verifyUser = () => {
         }
       }
     }, (err) => {
-      next(err);
+      next(error.notFoundError('Cannot find user with that username'))
     });
   };
 };

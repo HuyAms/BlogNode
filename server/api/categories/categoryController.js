@@ -8,13 +8,13 @@ exports.params = (req, res, next, id) => {
 
   Category.findById(id).then((category) => {
     if (!category) {
-      next(error.notFoundCategoryError);
+      next(error.notFoundError('Cannot find category with that id'));
     } else {
       req.category = category;
       next();
     }
   }, (err) => {
-    next(error.notFoundCategoryError);
+    next(error.notFoundError('Cannot find category with that id'));
   });
 };
 
@@ -22,13 +22,13 @@ exports.get = (req, res, next) => {
   Category.find({}).then((categories) => {
     res.json(responseHandler.successResponse(categories));
   }, (err) => {
-    next(error.internalServerError);
+    next(error.internalServerError());
   });
 };
 
 exports.getOne = (req, res, next) => {
   const category = req.category;
-  res.json(responseHandler.successResponse(categories));
+  res.json(responseHandler.successResponse(category));
 };
 
 exports.put = (req, res, next) => {
@@ -40,7 +40,7 @@ exports.put = (req, res, next) => {
 
   category.save((err, saved) => {
     if (err) {
-      next(err);
+      next(error.internalServerError());
     } else {
       res.json(responseHandler.successResponse(saved));
     }
@@ -53,14 +53,14 @@ exports.post = (req, res, next) => {
   Category.create(newCategory).then((category) => {
     res.json(responseHandler.successResponse(category));
   }, (err) => {
-    next(error.internalServerError);
+    next(error.internalServerError());
   });
 };
 
 exports.delete = (req, res, next) => {
   req.category.remove((err, removed) => {
     if (err) {
-      next(error.internalServerError);
+      next(error.internalServerError());
     } else {
       res.json(removed);
     }

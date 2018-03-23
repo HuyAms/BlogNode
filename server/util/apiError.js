@@ -14,34 +14,36 @@ class APIError extends ExtendableError {
   }
 }
 
-/*2xx*/
+const apiError = (message, status) => {
+  return new APIError(message, status);
+}
 
-/*3xx*/
+/*Code 400*/
+const badRequestError = (message = 'Invalid params') => {
+  return new APIError(message, httpStatus.BAD_REQUEST);
+}
 
-/*4xx*/
-const badRequestError = new APIError('Invalid params', httpStatus.BAD_REQUEST);//400
-const unauthorizedError = new APIError('Invalid token',
-    httpStatus.UNAUTHORIZED);//401
+/*Code 401*/
+const unauthorizedError = (message = 'Unauthorize') => {
+  return new APIError(message, httpStatus.UNAUTHORIZED);
+}
 
-const notFoundError = new APIError('Not found', httpStatus.NOT_FOUND);//404
-const notFoundCategoryError = new APIError('No category with that id',
-    httpStatus.NOT_FOUND);//404
-const notFoundPostError = new APIError('No post with that id',
-    httpStatus.NOT_FOUND);//404
-const notFoundUserError = new APIError('No user with that id',
-    httpStatus.NOT_FOUND);//404
 
-/*5xx*/
-const internalServerError = new APIError('Unexpected database error.',
-    httpStatus.INTERNAL_SERVER_ERROR); //500
+/*Code 404*/
+const notFoundError = (message = 'Not found') => {
+  return new APIError(message, httpStatus.NOT_FOUND);
+}
+
+/*Code 500*/
+const internalServerError = (message = 'Unexpected database error') => {
+  return new APIError(message, httpStatus.INTERNAL_SERVER_ERROR);
+}
 
 module.exports = {
   APIError,
-  badRequestError,
-  unauthorizedError,
-  notFoundError,
   internalServerError,
-  notFoundCategoryError,
-  notFoundPostError,
-  notFoundUserError
-};
+  notFoundError,
+  unauthorizedError,
+  badRequestError,
+  apiError
+}

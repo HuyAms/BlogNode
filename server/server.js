@@ -23,8 +23,10 @@ app.use('/auth/', auth);
 
 //handle error
 app.use((err, req, res, next) => {
+  console.log('Thisis the error : ', err.status)
+
   if (!(err instanceof error.APIError)) {
-    const apiError = new error.APIError(err.message, err.status);
+    const apiError = new error.apiError(err.message, err.status);
     return next(apiError);
   }
   return next(err);

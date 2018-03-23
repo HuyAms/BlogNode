@@ -6,13 +6,13 @@ const responseHandler = require('../../util/responseHandler');
 exports.params = (req, res, next, id) => {
   Post.findById(id).populate('author categories').exec().then((post) => {
     if (!post) {
-      next(error.notFoundPostError);
+      next(error.notFoundError('Cannot find post with that id'));
     } else {
       req.post = post;
       next();
     }
   }, (err) => {
-    next(error.notFoundPostError);
+    next(error.notFoundError('Cannot find post with that id'));
   });
 };
 
@@ -20,7 +20,7 @@ exports.get = (req, res, next) => {
   Post.find({}).populate('author categories').exec().then((posts) => {
     res.json(responseHandler.successResponse(posts));
   }, (err) => {
-    next(err.internalServerError);
+    next(err.internalServerError());
   });
 };
 
@@ -35,7 +35,7 @@ exports.put = (req, res, next) => {
   _.merge(post, update);
   post.save((err, saved) => {
     if (err) {
-      next(err.internalServerError);
+      next(err.internalServerError());
     } else {
       res.json(responseHandler.successResponse(saved));
     }
@@ -44,18 +44,19 @@ exports.put = (req, res, next) => {
 
 exports.post = (req, res, next) => {
   const newPost = req.body;
+  newPost.author = req.user._id;
 
   Post.create(newPost).then((post) => {
     res.json(responseHandler.successResponse(post));
   }, (err) => {
-    next(error.internalServerError);
+    next(error.internalServerError());
   });
 };
 
 exports.delete = (req, res, next) => {
   req.post.remove((err, removed) => {
     if (err) {
-      next(error.internalServerError);
+      next(error.internalServerError());
     } else {
       res.json(responseHandler.successResponse(removed));
     }
