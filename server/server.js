@@ -5,7 +5,7 @@ const error = require('./util/apiError');
 const responseHandler = require('./util/responseHandler');
 const mongoose = require('mongoose');
 const config = require('./config/config');
-// require('mongoose').connect(config.db.url);
+const auth = require('./auth/routes');
 
 //connect to mongoDB
 mongoose.connect(config.db.url).then(() => {
@@ -19,6 +19,7 @@ require('./middleware/appMiddleware')(app);
 
 //setup the api
 app.use('/api/', api);
+app.use('/auth/', auth);
 
 //handle error
 app.use((err, req, res, next) => {

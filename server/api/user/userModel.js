@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
   username: {
@@ -17,11 +18,13 @@ const UserSchema = new Schema({
 });
 
 //middleware that will run before a document is created
-UserSchema.pre('save', (next) => {
-  if (!this.isModified('password')) return next;
-    this.password = this.encryptPassword(this.password);
-    next();
-})
+UserSchema.pre('save', function (next) {
+  if (!this.isModified('password')) {
+    return next()
+  };
+  this.password = this.encryptPassword(this.password);
+  next();
+});
 
 UserSchema.methods = {
   //check the passwords on signin
@@ -32,12 +35,12 @@ UserSchema.methods = {
   //hashpassword
   encryptPassword: (plainTextPword) => {
     if (!plainTextPword) {
-      return ''
+      return '';
     } else {
       const salt = bcrypt.genSaltSync(10);
       return bcrypt.hashSync(plainTextPword, salt);
     }
-}
-}
+  },
+};
 
 module.exports = mongoose.model('user', UserSchema);

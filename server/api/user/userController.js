@@ -17,6 +17,10 @@ exports.params = (req, res, next, id) => {
   });
 };
 
+exports.me = (req, res, next, id) => {
+  res.json(responseHandler.successResponse(req.user));
+};
+
 exports.get = (req, res, next) => {
   User.find({}).then((users) => {
     res.json(responseHandler.successResponse(users));
@@ -51,7 +55,8 @@ exports.post = (req, res, next) => {
   User.create(newUser).then((user) => {
     res.json(responseHandler.successResponse(user));
   }, (err) => {
-    next(ererror.internalServerErrorr);
+    console.log(err)
+    next(error.internalServerErrorr);
   });
 };
 

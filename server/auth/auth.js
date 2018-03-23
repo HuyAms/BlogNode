@@ -52,12 +52,16 @@ exports.verifyUser = () => {
       if (!user) {
         res.status(401).json(error.badRequestError);
       } else {
-        //if everything is ok
-        //attach to req.user
-        //and call next so the controller
-        //can sign a token from the req.user._id
-        req.user = user;
-        next();
+        if (!user.authenticate(password)) {
+          res.status(401).json(error.unauthorizedError);
+        } else {
+          //if everything is ok
+          //attach to req.user
+          //and call next so the controller
+          //can sign a token from the req.user._id
+          req.user = user;
+          next();
+        }
       }
     }, (err) => {
       next(err);
