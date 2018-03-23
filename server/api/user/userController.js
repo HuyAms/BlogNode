@@ -2,10 +2,13 @@ const User = require('./userModel');
 const _ = require('lodash');
 const error = require('../../util/apiError');
 const responseHandler = require('../../util/responseHandler');
+const signToken = require('../../auth/auth').signToken;
 
 exports.params = (req, res, next, id) => {
-  console.log(id);
-  User.findById(id).then((user) => {
+  User.findById(id)
+  .select('-password')
+  .exec()
+  .then((user) => {
     if (!user) {
       next(error.notFoundUserError);
     } else {
@@ -18,20 +21,23 @@ exports.params = (req, res, next, id) => {
 };
 
 exports.me = (req, res, next, id) => {
-  res.json(responseHandler.successResponse(req.user));
+  responseHandler.successResponse(req.user.toJson())
 };
 
 exports.get = (req, res, next) => {
-  User.find({}).then((users) => {
-    res.json(responseHandler.successResponse(users));
+  User.find({})
+  .select('-password')
+  .exec()
+  .then((users) => {
+    res.json(responseHandler.successResponse(users.toJson()));
   }, (err) => {
     next(error.internalServerError);
   });
 };
 
 exports.getOne = (req, res, next) => {
-  const user = req.user;
-  res.json(responseHandler.successResponse(user));
+  const user = req.user.toJson();
+  res.json(responseHandler.successResponse(user.toJson()));
 };
 
 exports.put = (req, res, next) => {
@@ -45,7 +51,7 @@ exports.put = (req, res, next) => {
     if (err) {
       next(error.internalServerError);
     } else {
-      res.json(responseHandler.successResponse(saved));
+      res.json(responseHandler.successResponse(saved.toJson()));
     }
   });
 };
@@ -53,7 +59,8 @@ exports.put = (req, res, next) => {
 exports.post = (req, res, next) => {
   const newUser = req.body;
   User.create(newUser).then((user) => {
-    res.json(responseHandler.successResponse(user));
+    const token = signToken(user._id);
+    res.json(responseHandler.successResponse(token));
   }, (err) => {
     console.log(err)
     next(error.internalServerErrorr);
@@ -65,7 +72,7 @@ exports.delete = (req, res, next) => {
     if (err) {
       next(error.internalServerError);
     } else {
-      res.json(responseHandler.successResponse(removed));
+      res.json(responseHandler.successResponse(removed.toJson()));
     }
   });
 };

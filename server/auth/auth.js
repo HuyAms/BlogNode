@@ -7,10 +7,15 @@ const error = require('../util/apiError');
 
 exports.decodeToken = () => {
   return (req, res, next) => {
+    let formattedToken;
     //If found token in query then place it in the header
     if (req.query && req.query.hasOwnProperty('access_token')) {
-      req.headers.authorization = 'Bearer' + req.query.access_token;
+      formattedToken = 'Bearer ' + req.query.access_token;
+      req.headers.authorization = formattedToken;
     }
+
+    formattedToken = 'Bearer ' +  req.headers.authorization;
+    req.headers.authorization = formattedToken;
 
     //call next if token is valid
     //send error if token is invalid, then attached the decoded token to req.user
@@ -74,7 +79,7 @@ exports.signToken = (id) => {
   return jwt.sign(
       {_id: id},
       config.secrets.jwt,
-      {expiresInMinutes: config.expireTime},
+      {expiresIn: config.expireTime}
   );
 };
 
