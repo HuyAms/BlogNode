@@ -35,7 +35,7 @@ exports.put = (req, res, next) => {
   _.merge(post, update);
   post.save((err, saved) => {
     if (err) {
-      next(err.internalServerError());
+      next(error.badRequestError('Duplicate title error'));
     } else {
       res.json(responseHandler.successResponse(saved));
     }
@@ -49,7 +49,7 @@ exports.post = (req, res, next) => {
   Post.create(newPost).then((post) => {
     res.json(responseHandler.successResponse(post));
   }, (err) => {
-    next(error.internalServerError());
+    next(error.badRequestError('Duplicate title error'));
   });
 };
 

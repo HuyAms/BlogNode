@@ -49,7 +49,7 @@ exports.put = (req, res, next) => {
 
   user.save((err, saved) => {
     if (err) {
-      next(error.internalServerError());
+      next(error.badRequestError('This username has been used'));
     } else {
       res.json(responseHandler.successResponse(saved.toJson()));
     }
@@ -63,7 +63,7 @@ exports.post = (req, res, next) => {
     res.json({token: token});
   }, (err) => {
     console.log(err)
-    next(error.internalServerError());
+    next(error.badRequestError('This username has been used'));
   });
 };
 
