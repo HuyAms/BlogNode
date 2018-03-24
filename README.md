@@ -3,20 +3,39 @@
 * http://localhost:3000/api
 ## API
 ### Official
+* Authen
+ * POST/authen/signin
 * Users
-	* POST/users/login
-	* GET/users/
+
+| key |	type | description |
+| --- | --- | --- |
+| username | string |  |
+| password | string |  |
+
+  * POST/users/login
+  * GET/users/
   * GET/users/:id
   * PUT/users/:id
   * DELETE/users/:id
 * Categories
-	* POST/categories/login
-	* GET/categories/
+
+| key |	type | description |
+| --- | --- | --- |
+| name | string |  |
+
+  * POST/categories
+  * GET/categories/
   * GET/categories/:id
   * PUT/categories/:id
   * DELETE/categories/:id
 * Posts
-	* GET/posts/
+
+| key |	type | description |
+| --- | --- | --- |
+| title | string |  |
+| text | string |  |
+
+  * GET/posts/
   * GET/posts/:id
   * PUT/posts/:id
   * DELETE/posts/:id
