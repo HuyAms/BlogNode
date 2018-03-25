@@ -6,36 +6,44 @@
 * Authen
  * POST/authen/signin
 * Users
-
-| key |	type | description |
-| --- | --- | --- |
-| username | string |  |
-| password | string |  |
-
   * POST/users/login
   * GET/users/
   * GET/users/:id
   * PUT/users/:id
   * DELETE/users/:id
-* Categories
-
+  
 | key |	type | description |
 | --- | --- | --- |
-| name | string |  |
+| username | string |  |
+| password | string |  |
 
+* Categories
   * POST/categories
   * GET/categories/
   * GET/categories/:id
   * PUT/categories/:id
   * DELETE/categories/:id
-* Posts
+  
+| key |	type | description |
+| --- | --- | --- |
+| name | string |  |
 
+
+* Posts
+  * POST/posts
+  * GET/posts/
+  * GET/posts/:id
+  * PUT/posts/:id
+  * DELETE/posts/:id
+  
 | key |	type | description |
 | --- | --- | --- |
 | title | string |  |
 | text | string |  |
 
-  * GET/posts/
-  * GET/posts/:id
-  * PUT/posts/:id
-  * DELETE/posts/:id
+* Photos
+ * POST/photos
+ 
+ | key |	type | description |
+| --- | --- | --- |
+| photo | file | jpeg, jpg, png |
