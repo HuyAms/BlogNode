@@ -4,7 +4,7 @@
 ## API
 ### Official
 * Authen
- * POST/authen/signin
+  * POST/authen/signin
 * Users
   * POST/users/login
   * GET/users/
@@ -42,8 +42,8 @@
 | text | string |  |
 
 * Photos
- * POST/photos
+  * POST/photos
  
- | key |	type | description |
+| key |	type | description |
 | --- | --- | --- |
 | photo | file | jpeg, jpg, png |
