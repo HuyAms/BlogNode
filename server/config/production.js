@@ -1,5 +1,5 @@
 module.exports = {
   db: {
-    url: 'mongodb://localhost/nodeblog'
+    url:  process.env.MONGODB_URI
   }
 }
