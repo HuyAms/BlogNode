@@ -16,6 +16,7 @@ mongoose.connect(config.db.url).then(() => {
 
 //setup the app middleware
 require('./middleware/appMiddleware')(app);
+app.use(express.static('public'));
 
 //setup the api
 app.use('/api/', api);
