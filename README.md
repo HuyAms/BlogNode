@@ -4,7 +4,7 @@
 ## API
 ### Official
 * Authen
-  * POST/authen/signin
+  * POST/auth/signin
 * Users
   * POST /api/users/login
   * GET /api/users/
