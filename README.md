@@ -6,7 +6,7 @@
 * Authen
   * POST/auth/signin
 * Users
-  * POST /api/users/login
+  * POST /api/users
   * GET /api/users/
   * GET /api/users/:id
   * PUT /api/users/:id
