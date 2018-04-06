@@ -1,16 +1,16 @@
 # BlogNode API
 ## Hostname
-* http://localhost:3000/api
+* https://ngblogapi.herokuapp.com/
 ## API
 ### Official
 * Authen
-  * POST/authen/signin
+  * POST/auth/signin
 * Users
-  * POST/users/login
-  * GET/users/
-  * GET/users/:id
-  * PUT/users/:id
-  * DELETE/users/:id
+  * POST /api/users
+  * GET /api/users/
+  * GET /api/users/:id
+  * PUT /api/users/:id
+  * DELETE /api/users/:id
   
 | key |	type | description |
 | --- | --- | --- |
@@ -18,11 +18,11 @@
 | password | string |  |
 
 * Categories
-  * POST/categories
-  * GET/categories/
-  * GET/categories/:id
-  * PUT/categories/:id
-  * DELETE/categories/:id
+  * POST /api/categories
+  * GET /api/categories/
+  * GET /api/categories/:id
+  * PUT /api/categories/:id
+  * DELETE /api/categories/:id
   
 | key |	type | description |
 | --- | --- | --- |
@@ -30,11 +30,11 @@
 
 
 * Posts
-  * POST/posts
-  * GET/posts/
-  * GET/posts/:id
-  * PUT/posts/:id
-  * DELETE/posts/:id
+  * POST /api/posts
+  * GET /api/posts/
+  * GET /api/posts/:id
+  * PUT /api/posts/:id
+  * DELETE /api/posts/:id
   
 | key |	type | description |
 | --- | --- | --- |
@@ -42,8 +42,10 @@
 | text | string |  |
 
 * Photos
-  * POST/photos
+  * POST /api/photos
  
 | key |	type | description |
 | --- | --- | --- |
 | photo | file | jpeg, jpg, png |
+
+** Note: ** PhotoUrl: https://ngblogapi.herokuapp.com/photos/{filename}
